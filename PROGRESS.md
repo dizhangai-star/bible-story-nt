@@ -5,9 +5,8 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 1 done — v1.1 waiting for the user's review** (`docs/castsheet.png`, `docs/storyboard.png` v1.1,
-`docs/styleframes.png`). After sign-off: Sprint 2 (01-nativity, 02-baptism), starting each chapter from its board
-shots in `clips/board.js` (`BOARD.shot(id, E)` gives the lit state of any board shot).
+**Sprint 2 done — draft waiting for the user's review** (`out/sprint2-draft.mp4`, silent: 01-nativity 21 s,
+02-baptism 22 s). After sign-off: Sprint 3 (03-light, 04-supper) from the board shots in `clips/board.js`.
 
 ## Decisions (locked)
 - **Folder / repo:** own folder `bible-nt/`, own git repo; `bible-story/` and `_kit/` are never edited from here.
@@ -34,13 +33,24 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
 - [x] **1 · Brief + cast + storyboard**: TREATMENT · cast sheet v1 · glass keys · board v1.1 · style frames (2026-09-30)
   v1.1: 01 star r 64 + brighter glow at the wides; pearl gate redrawn (wide nacre arch, gold doorway, street widening
   toward us — v1's slim white arch read as a candle); 07 floor light (see Notes); `sf.js` = 01-3 · 04-3 · 07-3 clean
-- [ ] **2 · 01-nativity, 02-baptism**
+- [x] **2 · 01-nativity, 02-baptism** (2026-09-30, in review)
+  01: in from black (fadeIn 0–1.4); the star of Bethlehem moves from the first frame (key path: drifts in I, crosses the
+  mullion fast 6.9–7.7, settles over the stable in II at 11.2); camera follows; the child kindles 12–14.5 (warm `pts`
+  on the manger + Mary's face), the moon band dims to .7. 02: truck along the Jordan → II–III; the heavens open = a
+  gold/white ray cut into lancet II from the white roundel down, 7 pieces one by one, while the band narrows onto II;
+  the dove comes out of the roundel down the ray (camera follows it), settles over Jesus' head in a flare at 14.2;
+  John blends bless → bow. Both end on the next chapter's name; joints (`J`) still to write in Sprint 6.
 - [ ] **3 · 03-light, 04-supper**
 - [ ] **4 · 05-cross, 06-resurrection**
 - [ ] **5 · 07-jerusalem + score**
 - [ ] **6 · Deliver**: joints, cards, newcomer review → captions, compile, check, srt, poster, GitHub
 
 ## Notes
+- Chapter clips return `st` directly until Sprint 6: `GX.joint` needs `this.J` (it reads `J.next`), so don't call it
+  without one.
+- A glass piece moving between lancets (the star): draw it in both lancets at the same world position; each lancet
+  clips it, so it passes behind the mullion. Keep the crossing short (≈ .8 s), it vanishes there.
+- White on white disappears: the dove on the ray needs a gold ray and a dove scaled 1.7 (wider than the ray).
 - `clips/ot-genesis.js` has no joint (`uses` without `02-eden`; `GX.joint` returns the state as is when the next
   clip isn't loaded). `08-end.js` still holds the OT content (rewrite in Sprint 6).
 - NT cast (`sg/figure.js` CAST): jesus, jesusRisen (gold mantle, cross-staff), mary (blue veil = `head: 'cloth'`,
