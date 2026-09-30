@@ -5,15 +5,28 @@
 // Beats (TREATMENT §4), one continuous camera: 01-1 wide, stillness · 01-2 follow the star · 01-3 the stable.
 window.CLIP = {
   id: '01-nativity',
-  uses: ['_glass'],
+  uses: ['_glass', '02-baptism'],
   duration: 21,
-  timing: { fadeIn: [0, 1.4], fade: [21, 21] },   // in from black after the opening card; out = the joint (Sprint 6)
+  timing: { fadeIn: [0, 1.4], fade: [21, 21] },   // in from black after the opening card; out = the joint J1
   caps: [
     [1.4, 5.2, 'And the light shineth in darkness; and the darkness comprehended it not.', '光照在黑暗裡，黑暗卻不接受光。'],
     [6.4, 11.0, 'The star went before them, till it came and stood over where the young child was.', '那星在他們前頭行，直行到小孩子的地方，就在上頭停住了。'],
     [12.6, 17.6, 'For unto you is born this day a Saviour, which is Christ the Lord.', '因今天為你們生了救主，就是主基督。'],
-    [18.4, 20.8, 'The Second Window · The Baptism', '第二扇窗 · 受洗'],   // the next chapter's name, while its glass comes (Sprint 6)
+    [18.4, 20.8, 'The Second Window · The Baptism', '第二扇窗 · 受洗'],   // the next chapter's name, while its glass comes (J1)
   ],
+  // J1 · the star → the dawn: the camera leaves the manger and rises to the star, which flares until the window
+  // whites out (the glass changes under the glare); the glare settles into the cold dawn over the Jordan and the
+  // camera pulls back to 02's opening wide
+  J: { next: '02-baptism', t0: 17.6,
+    A(E, a, b, u) {
+      const { ss, seg, lerp, LX } = E, GX = window.GX, S = [LX[1] + 40, 70], C = [S[0], 150, 1.45];
+      const o = GX.mixState(a, b, ss(seg(u, .45, .9)), () => u >= .56);
+      o.cam = u < .5 ? GX.camMix(a.cam, C, ss(seg(u, 0, .5))) : GX.camMix(C, b.cam, ss(seg(u, .6, 1)));
+      const g = ss(seg(u, .15, .5)), off = ss(seg(u, .56, .85));   // the star swells and whitens, then gives way to the dawn
+      o.pts = [[S[0], S[1], lerp(80, 420, g), lerp(1.8, 5, g) * (1 - off), [1, .97, .9]], ...o.pts].slice(0, 4);
+      o.expo = 1 + 4 * Math.pow(Math.sin(Math.PI * seg(u, .36, .76)), 3);
+      return o;
+    } },
   T: { go: 3.2, stop: 11.2, kindle: 12.0, full: 14.5 },
   CHILD: [0, 510],   // the child's glow (world, x relative to LX[1]); the manger at LX[1] + 60, 604
   // the star's path (world): high in lancet I → over the mullion → above the stable roof in lancet II
@@ -60,7 +73,7 @@ window.CLIP = {
     const [cx, cy] = this.CHILD, pulse = 1 + .08 * Math.sin(t * 2.2);
     st.pts = [[sx, sy, lerp(170, 80, ss(seg(t, T.go, T.stop))), lerp(4.2, 1.8, kin), [1, .97, .9]]];
     if (kin > 0) st.pts.push([LX[1] + cx + 60, cy, 30 + 90 * kin, 3.1 * kin * pulse, [1, .8, .5]], [LX[1] - 30, 470, 70, 1.6 * kin, [1, .75, .45]]);
-    return st;   // Sprint 6: GX.joint(E, this, st, t) with J
+    return GX.joint(E, this, st, t);
   },
 };
 // sound: night air; a high glass note as the star sets off and as it stops; a low bell when the child kindles

@@ -8,13 +8,13 @@ window.CLIP = {
   id: '02-baptism',
   uses: ['_glass'],
   duration: 22,
-  timing: { fadeIn: [-1, 0], fade: [22, 22] },   // no fades: the joints hand the picture over (Sprint 6)
+  timing: { fadeIn: [-1, 0], fade: [22, 22] },   // no fades: the joints hand the picture over (J2 in Sprint 3)
   caps: [
     [0.8, 4.6, 'Then cometh Jesus from Galilee to Jordan unto John, to be baptized of him.', '耶穌從加利利來到約旦河，見了約翰，要受他的洗。'],
     [5.6, 8.8, 'And, lo, the heavens were opened unto him.', '天忽然為他開了。'],
     [9.6, 13.6, 'He saw the Spirit of God descending like a dove.', '他就看見神的靈彷彿鴿子降下。'],
     [14.4, 18.6, 'This is my beloved Son, in whom I am well pleased.', '這是我的愛子，我所喜悅的。'],
-    [19.4, 21.6, 'The Third Window · The Light of the World', '第三扇窗 · 世界的光'],   // the next chapter's name (Sprint 6)
+    [19.4, 21.6, 'The Third Window · The Light of the World', '第三扇窗 · 世界的光'],   // the next chapter's name (J2)
   ],
   T: { open: 5.4, ray: 8.4, dove: 9.4, land: 14.2, bow: 14.8 },
   RAY: [20, -300, 290],   // the ray in lancet II: x offset, top y, bottom y (just above Jesus' halo)
@@ -56,7 +56,7 @@ window.CLIP = {
     st.pts = [];
     if (n > 0 && n < 1) st.pts.push([LX[1] + rx, lerp(-300, r1, n), 50, 2.2, [1, .97, .9]]);
     if (t >= T.dove) st.pts.push([LX[1] + rx, lerp(-230, this.DOVE, ss(seg(t, T.dove, T.land))), 40 + 50 * ss(fl), 1.4 + 2.2 * Math.sin(Math.PI * Math.min(fl, 1) * .5) * (fl > 0 ? 1 : 0), [1, .97, .9]]);
-    return st;   // Sprint 6: GX.joint(E, this, st, t) with J
+    return st;   // Sprint 3: GX.joint(E, this, st, t) with J2 → 03-light
   },
 };
 // sound: river air; seven rising glass notes as the ray is cut; soft wing beats down the ray; a bell at the voice
