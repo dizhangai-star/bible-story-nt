@@ -5,11 +5,9 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 1 — cast sheet v1 + storyboard v1 waiting for the user's review** (`docs/castsheet.png`,
-`docs/storyboard.png`). After sign-off: push to https://github.com/dizhangai-star/bible-story-nt.git (remote `origin`
-set), then Sprint 2 (01-nativity, 02-baptism), starting each chapter from its board shots in `clips/board.js`.
-Open items from the board: 07 has colour but no floor patch (the floor light comes from the sun band; with `sunI` 0
-there is none — 07 may need a floor patch from `pts` or a very soft white band); the 01 star is small at the wide.
+**Sprint 1 done — v1.1 waiting for the user's review** (`docs/castsheet.png`, `docs/storyboard.png` v1.1,
+`docs/styleframes.png`). After sign-off: Sprint 2 (01-nativity, 02-baptism), starting each chapter from its board
+shots in `clips/board.js` (`BOARD.shot(id, E)` gives the lit state of any board shot).
 
 ## Decisions (locked)
 - **Folder / repo:** own folder `bible-nt/`, own git repo; `bible-story/` and `_kit/` are never edited from here.
@@ -33,8 +31,9 @@ there is none — 07 may need a floor patch from `pts` or a very soft white band
 ## Sprints
 Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story`).
 - [x] **0 · Scaffold** — `bible-nt/` from bible-story's engine; LVX · MVNDI; 00-title text (2026-09-30)
-- [ ] **1 · Brief + cast + storyboard**: TREATMENT · cast sheet v1 · glass keys · board v1 — drafted 2026-09-30, in review
-  (style frames: the board thumbnails serve; `sf.js` still holds the OT frames)
+- [x] **1 · Brief + cast + storyboard**: TREATMENT · cast sheet v1 · glass keys · board v1.1 · style frames (2026-09-30)
+  v1.1: 01 star r 64 + brighter glow at the wides; pearl gate redrawn (wide nacre arch, gold doorway, street widening
+  toward us — v1's slim white arch read as a candle); 07 floor light (see Notes); `sf.js` = 01-3 · 04-3 · 07-3 clean
 - [ ] **2 · 01-nativity, 02-baptism**
 - [ ] **3 · 03-light, 04-supper**
 - [ ] **4 · 05-cross, 06-resurrection**
@@ -43,7 +42,7 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
 
 ## Notes
 - `clips/ot-genesis.js` has no joint (`uses` without `02-eden`; `GX.joint` returns the state as is when the next
-  clip isn't loaded). `sf.js` and `08-end.js` still hold the OT content (rewrite in Sprint 6).
+  clip isn't loaded). `08-end.js` still holds the OT content (rewrite in Sprint 6).
 - NT cast (`sg/figure.js` CAST): jesus, jesusRisen (gold mantle, cross-staff), mary (blue veil = `head: 'cloth'`,
   `band: false`), joseph, john, blind, peter, magdalene, disciple. New options: `halo: 'cross'|'plain'` (drawn first,
   behind the head), `lock: false` (no front hair lock; men with long hair), items `crossStaff`, `cup`, `bread`.
@@ -58,3 +57,7 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   world-unit painter (board.js `fig` does it).
 - An unlit pane in a lit window (03 blind man): heavy dark matting over the pane (`board.dim`), since the band lights
   whole lancets.
+- 07 light (no sun, Rev 21:23): `glory` in board.js — a white band `sunI` 1.6, `sz` 1.3 (long floor patch), `raysK` 0 and
+  `haze` .08 so there are no shafts in the air, only colour on the floor; window glow `pts` at y 150, 1.8.
+- `board.js` sets `window.BOARD` (the runtime resets `window.CLIP` to the main clip after loading `uses`), so a dev
+  clip can `uses: ['_glass', 'board']` and call `window.BOARD.shot(id, E)` (sf.js does).

@@ -64,7 +64,7 @@ window.CLIP = {
     if (ch === 'nativity') return [0, 1, 2, 3].map((k) => pane((P, cx, b) => {
       self.stars(E, P, cx, 8000 + k * 40, 20);
       hills(P, cx, 560, [{ y: 0, a: 10, ph: k, c: COL.purple2 }], 8200 + k);
-      if (k === (o.starAt ?? 1)) GX.bigStar(E, P, cx + (k === 1 ? 40 : 0), k === 1 ? 60 : -120, 34, 8300);
+      if (k === (o.starAt ?? 1)) GX.bigStar(E, P, cx + (k === 1 ? 40 : 0), k === 1 ? 60 : -120, k === 1 ? 34 : 64, 8300);   // big at the wides
       if (k === 1) { GX.stable(E, P, cx, 8310); self.fig(E, P, cx, b, 'mary', 'pray', -80, .62);
         GX.manger(E, P, cx + 60, 604, .9, 8330); E.drawChild(P, b.translate(cx + 60, 604 - 94), 8340); P.setTransform(b); }
       if (k === 2) { self.fig(E, P, cx, b, 'joseph', 'holdStaff', -30, .72, true); }
@@ -119,10 +119,12 @@ window.CLIP = {
   shot(id, E) {
     const { LX, ROSE } = E, L = (k, o) => this.light(E, k, o), W = [0, 300, .5];
     const flash = (x, y) => [[x, y, 110, 3.2, [1, .96, .85]]], warm = [1, .8, .5], white = [1, .97, .9];
-    const within = [0, 1, 2, 3].map((i) => [LX[i], 250, 190, 2.4, white]);
+    // 07: no sun (Rev 21:23) — a shadowless white light, no shafts in the air, only colour on the floor
+    const glory = { sunI: 1.6, sunCol: [1, .97, .9], sx: 0, sz: 1.3, raysK: 0, haze: .08, roseI: 1.8, skyI: .3 };
+    const within = [0, 1, 2, 3].map((i) => [LX[i], 150, 170, 1.8, white]);
     switch (id) {
-      case '01-1': return L('night', { cam: W, sunI: 1.0, skyI: .1, lancets: this.panes(E, 'nativity', { starAt: 0 }), pts: [[LX[0], -120, 50, 2.2, white]] });
-      case '01-2': return L('night', { cam: [-340, 200, .9], sunI: 1.0, skyI: .1, lancets: this.panes(E, 'nativity', { starAt: 0 }), pts: [[LX[0], -120, 60, 2.4, white]] });
+      case '01-1': return L('night', { cam: W, sunI: 1.0, skyI: .1, lancets: this.panes(E, 'nativity', { starAt: 0 }), pts: [[LX[0], -120, 120, 3.2, white]] });
+      case '01-2': return L('night', { cam: [-340, 200, .9], sunI: 1.0, skyI: .1, lancets: this.panes(E, 'nativity', { starAt: 0 }), pts: [[LX[0], -120, 120, 3.2, white]] });
       case '01-3': return L('night', { cam: [LX[1] + 20, 430, 1.8], sunI: .9, skyI: .1, lancets: this.panes(E, 'nativity'), pts: [[LX[1] + 60, 520, 110, 3, warm], [LX[1] + 40, 60, 40, 1.4, white]] });
       case '02-1': return L('dawn', { cam: [-300, 250, .8], lancets: this.panes(E, 'baptism', { doveY: -200 }) });
       case '02-2': return L('dawn', { cam: [0, 380, 1.5], sunU: 0, bandW: 520, sunI: 2.8, lancets: this.panes(E, 'baptism', { doveY: -200 }) });
@@ -140,8 +142,8 @@ window.CLIP = {
       case '06-2': return L('night', { cam: [LX[1], 470, 1.8], sunI: 1.0, skyI: .1, lancets: this.panes(E, 'tomb', { roll: .85 }), pts: [[LX[1] - 30, 470, 70, 1.5, [1, .85, .55]]] });
       case '06-3': return L('dawn', { cam: [(LX[2] + LX[3]) / 2, 400, 1.3], lancets: this.panes(E, 'tomb', { roll: 1, dawn: true, scars: true }) });
       case '07-1': return L('noon', { cam: [0, ROSE.y, 2.6], sunI: 0, roseI: 2.2, amb: .04, lancets: this.panes(E, 'jerusalem') });
-      case '07-2': return L('noon', { cam: [0, 280, .8], sunI: 0, roseI: 1.8, skyI: .3, lancets: this.panes(E, 'jerusalem'), pts: within });
-      case '07-3': return L('noon', { cam: W, sunI: 0, roseI: 1.8, skyI: .3, lancets: this.panes(E, 'jerusalem'), pts: within, inscription: window.GX.TITLE, gild: .3 });
+      case '07-2': return L('noon', { cam: [0, 280, .8], ...glory, lancets: this.panes(E, 'jerusalem'), pts: within });
+      case '07-3': return L('noon', { cam: W, ...glory, lancets: this.panes(E, 'jerusalem'), pts: within, inscription: window.GX.TITLE, gild: .3 });
     }
     return L('night', { cam: W });
   },
@@ -163,3 +165,4 @@ window.CLIP = {
     O.restore();
   },
 };
+window.BOARD = window.CLIP;   // sf.js loads the board through `uses` and draws its shots
