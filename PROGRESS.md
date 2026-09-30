@@ -5,9 +5,9 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 7.1 — cast sheet v1 + storyboard v1 waiting for the user's review** (`docs/castsheet.png`,
+**Sprint 1 — cast sheet v1 + storyboard v1 waiting for the user's review** (`docs/castsheet.png`,
 `docs/storyboard.png`). After sign-off: push to https://github.com/dizhangai-star/bible-story-nt.git (remote `origin`
-set), then Sprint 7.2 (01-nativity, 02-baptism), starting each chapter from its board shots in `clips/board.js`.
+set), then Sprint 2 (01-nativity, 02-baptism), starting each chapter from its board shots in `clips/board.js`.
 Open items from the board: 07 has colour but no floor patch (the floor light comes from the sun band; with `sunI` 0
 there is none — 07 may need a floor patch from `pts` or a very soft white band); the 01 star is small at the wide.
 
@@ -31,18 +31,19 @@ there is none — 07 may need a floor patch from `pts` or a very soft white band
   keep a dim band; ≤ 4 `pts`; `gild` ≤ .15 in daylight; seeded `R(seed)` only.
 
 ## Sprints
-- [x] **7.0 · Scaffold** — `bible-nt/` from bible-story's engine; LVX · MVNDI; 00-title text (2026-09-30)
-- [ ] **7.1 · Brief + cast + storyboard**: TREATMENT · cast sheet v1 · glass keys · board v1 — drafted 2026-09-30, in review
+Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story`).
+- [x] **0 · Scaffold** — `bible-nt/` from bible-story's engine; LVX · MVNDI; 00-title text (2026-09-30)
+- [ ] **1 · Brief + cast + storyboard**: TREATMENT · cast sheet v1 · glass keys · board v1 — drafted 2026-09-30, in review
   (style frames: the board thumbnails serve; `sf.js` still holds the OT frames)
-- [ ] **7.2 · 01-nativity, 02-baptism**
-- [ ] **7.3 · 03-light, 04-supper**
-- [ ] **7.4 · 05-cross, 06-resurrection**
-- [ ] **7.5 · 07-jerusalem + score**
-- [ ] **7.6 · Deliver**: joints, cards, newcomer review → captions, compile, check, srt, poster, GitHub
+- [ ] **2 · 01-nativity, 02-baptism**
+- [ ] **3 · 03-light, 04-supper**
+- [ ] **4 · 05-cross, 06-resurrection**
+- [ ] **5 · 07-jerusalem + score**
+- [ ] **6 · Deliver**: joints, cards, newcomer review → captions, compile, check, srt, poster, GitHub
 
 ## Notes
 - `clips/ot-genesis.js` has no joint (`uses` without `02-eden`; `GX.joint` returns the state as is when the next
-  clip isn't loaded). `sf.js` and `08-end.js` still hold the OT content (rewrite in 7.6).
+  clip isn't loaded). `sf.js` and `08-end.js` still hold the OT content (rewrite in Sprint 6).
 - NT cast (`sg/figure.js` CAST): jesus, jesusRisen (gold mantle, cross-staff), mary (blue veil = `head: 'cloth'`,
   `band: false`), joseph, john, blind, peter, magdalene, disciple. New options: `halo: 'cross'|'plain'` (drawn first,
   behind the head), `lock: false` (no front hair lock; men with long hair), items `crossStaff`, `cup`, `bread`.
