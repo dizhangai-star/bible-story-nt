@@ -1,0 +1,7 @@
+{
+  "name": "bible-nt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "光之窗 · 新約 · The New Covenant — drawn in code with the video kit (cg-lab)",
+  "type": "module"
+}
