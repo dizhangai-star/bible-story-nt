@@ -16,7 +16,7 @@ const png = await page.evaluate(async () => {
   const g = document.createElement('canvas'); g.width = W; g.height = H; const c = g.getContext('2d');
   c.fillStyle = '#16140f'; c.fillRect(0, 0, W, H);
   const zh = (s, w = 500) => `${w} ${s}px "Noto Serif TC", Cinzel`;
-  c.fillStyle = '#efe2c4'; c.font = '700 34px Cinzel, "Noto Serif TC"'; c.fillText('光之窗 · 新約 — 分鏡圖 STORYBOARD v1', 40, 54);
+  c.fillStyle = '#efe2c4'; c.font = '700 34px Cinzel, "Noto Serif TC"'; c.fillText('光之窗 · 新約 — 分鏡圖 STORYBOARD v1.1', 40, 54);
   c.font = zh(19); c.fillStyle = 'rgba(239,226,196,.72)';
   c.fillText('7 章 · 21 鏡頭 · 約 2:30 · 每個鏡頭只有一個運鏡、一個主要動作 · 縮略圖由真實引擎渲染（打光、角色、玻璃均為成片效果）', 40, 88);
   // legend of the camera marks

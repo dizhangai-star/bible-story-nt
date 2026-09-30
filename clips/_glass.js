@@ -335,8 +335,14 @@ window.GX = {
     for (const [x, h] of [[cx - 118, 170], [cx + 118, 150]]) P.piece(smooth([[x - 30, y + 40, 1], [x - 30, y - h, 1], [x, y - h - 50, 1], [x + 30, y - h, 1], [x + 30, y + 40, 1]]), COL.teal, { id: id + (x > cx), lead: 5, wash: .25 });
     P.piece(smooth([[cx - 160, 606, 1], [cx - 160, y, 1], [cx + 160, y, 1], [cx + 160, 606, 1]]), COL.teal, { id: id + 2, lead: 5.5, wash: .3,
       paint: g => { g.strokeStyle = 'rgba(10,40,40,.45)'; g.lineWidth = 1.4; g.beginPath(); for (let r = 0; r < 6; r++) { const yy = y + 20 + r * 34; g.moveTo(cx - 160, yy); g.lineTo(cx + 160, yy); } g.stroke(); } });
-    P.piece(smooth([[cx - 42, 606, 1], [cx - 42, y + 90], [cx, y + 30], [cx + 42, y + 90], [cx + 42, 606, 1]]), COL.white, { id: id + 3, lead: 5, matW: 10 });   // the pearl gate
-    P.piece(smooth([[cx - 14, 606, 1], [cx - 8, y + 130], [cx + 8, y + 130], [cx + 14, 606, 1]]), COL.gold2, { id: id + 4, lead: 3.4, mat: false });    // the street of gold
+    // the gate: open (Rev 21:25), a wide round arch of pearl (nacre wash, pale rose/blue sheen) around a warm doorway,
+    // the street of gold running out of it and widening toward us — broad, not a slim flame
+    const gx = 64, gy = y + 60;
+    P.piece(smooth([[cx - gx - 16, 606, 1], [cx - gx - 16, gy + 40, 1], [cx - gx - 16, gy], [cx, gy - gx - 22], [cx + gx + 16, gy], [cx + gx + 16, gy + 40, 1], [cx + gx + 16, 606, 1],
+      [cx + gx, 606, 1], [cx + gx, gy + 40, 1], [cx + gx, gy], [cx, gy - gx - 4], [cx - gx, gy], [cx - gx, gy + 40, 1], [cx - gx, 606, 1]]), '#cfc6dc', { id: id + 3, lead: 5, matW: 8,
+      paint: g => { for (const [c, dx] of [['rgba(240,170,200,.35)', -40], ['rgba(150,200,240,.35)', 40]]) brush(g, [[cx + dx - 30, gy - 50], [cx + dx * 1.6, gy + 10], [cx + dx * 1.7, 600]], 4, { color: c }); } });
+    P.piece(smooth([[cx - gx, 606, 1], [cx - gx, gy + 40, 1], [cx - gx, gy], [cx, gy - gx - 4], [cx + gx, gy], [cx + gx, gy + 40, 1], [cx + gx, 606, 1]]), COL.gold, { id: id + 5, lead: 4, wash: .3 });   // light within
+    P.piece(smooth([[cx - 18, gy + 50, 1], [cx + 18, gy + 50, 1], [cx + 60, 606, 1], [cx - 60, 606, 1]]), COL.gold2, { id: id + 4, lead: 3.4, mat: false });    // the street of gold
     this.JEWELS.forEach((c, k) => { if (k % 2 === (id % 2)) return; const x = cx - 140 + (k >> 1) * 56; P.piece(circle(x, y + 8, 11), c, { id: id + 10 + k, lead: 3, mat: false }); });
   },
   // rain: grisaille streaks painted on the glass, stepped (t already stepped by the caller)
