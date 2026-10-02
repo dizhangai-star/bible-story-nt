@@ -5,10 +5,9 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 4 done — draft waiting for the user's review** (`out/sprint4-draft.mp4`, silent, 01–06 ≈ 136 s: 01 21 s ·
-02 23 s · 03 22 s · 04 22 s · 05-cross 25 s · 06-resurrection 23 s, joints J1–J5). After sign-off: Sprint 5
-(07-jerusalem + score), **with J6 (06 → 07)** — 06 ends with `return st`, its caption already names the seventh window,
-and its camera already pulls back to the wide (lancet I's gold scars in view) for the hand-off.
+**Sprint 5 done — draft waiting for the user's review** (`out/sprint5-draft.mp4`, scored: 00-title + 01–07 ≈ 2:51,
+first draft with sound; 06 now 26 s with J6, 07-jerusalem 22.5 s, fading out). After sign-off: Sprint 6 (Deliver):
+rewrite `08-end` (still the OT end card), joint review, newcomer review → captions, compile, check, srt, poster, GitHub.
 
 ## Decisions (locked)
 - **Folder / repo:** own folder `bible-nt/`, own git repo; `bible-story/` and `_kit/` are never edited from here.
@@ -73,7 +72,22 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   dawn 11–14.6 (`mixState(night, dawn)`); pan to III–IV, lancet IV's matting lifts from the risen Christ's halo in 8
   steps (13.2–15.8, as 03); "Mary" 16.2: Magdalene blends kneelLook → kneelSee; lancet I carries the veil's tear as
   lead scars (`GX.scars`) that turn gold with the dawn; pull back to the wide 19.4–23 to show them.
-- [ ] **5 · 07-jerusalem + score**
+- [x] **5 · 07-jerusalem + score** (2026-10-02, in review)
+  J6 (06 → 07, t0 22; 06 now 26 s): the dawn band goes out as the camera rises toward the rose (`sunI` → 0, `roseI` → .1);
+  blackout u .36–.53; out of the dark the rose's centre sparks (07 frame 0: centre lit, petals at .08) — Genesis reversed.
+  07: rose ECU; petals light clockwise from the top (.6–3.4); the 36-jewel ring is re-set as the 12 foundation stones
+  (`GX.JEWELS`, 3 segments each, from the top, 3.8–7.2, a flare `pts` on each; `drawRose` got a `col(q, k)` hook);
+  long pull back and down to the city (7–13.4); no sun until the first gate lights, then the shadowless white `glory`
+  light (`raysK` 0, `haze` .08, `sz` 1.3); each lancet's matting lifts from its pearl gate outward (8 steps, 9.4 + .8 k),
+  with a gate `pts` flare; widest at 17 (floor colour, LVX · MVNDI `gild` .3); fade 20–22.5.
+  Score (`audio/score.mjs`, OT chapter scores removed — they stay in ../bible-story): 01 lullaby (open D, the star's glass
+  is the melody, D major at the kindling) · 02 harp river, D major swell at the opening, the recorder descends with
+  the dove, G–A–D · 03 thin D minor, D major note by note in his hand, the Genesis line in D major when he sees · 04
+  chorale Bb–F–Gm, stops for the bread, A → D at the cup · 05 D minor lament, bass D–C–Bb–A as the light fails, the
+  recorder stops at "gave up the ghost", silence 13–16.4, a bare fifth after the veil · 06 grief, silence before the
+  stone, A pedal under the roll, D major at the light, the Genesis line at "Mary" · 07 harp per petal, a chord per
+  gate (D · G/D · A/D · D), the Genesis line whole (Dorian, over F · Gm · A) resolving to D major on the widest.
+  Joints ring 1.2 s and land in the next chapter's key. 07's stone glass notes D5…A6 (one per stone).
 - [ ] **6 · Deliver**: joint review, cards, newcomer review → captions, compile, check, srt, poster, GitHub
 
 ## Notes
@@ -110,3 +124,7 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
 - A log-zoom push from .5 to 1.8 over 3 s reads as a jump in the middle: add an intermediate key (06: 2.4 → 4.6 → 6.8).
 - `board.js` sets `window.BOARD` (the runtime resets `window.CLIP` to the main clip after loading `uses`), so a dev
   clip can `uses: ['_glass', 'board']` and call `window.BOARD.shot(id, E)` (sf.js does).
+- `drawRose(P, { lit, col })`: `q.ring` marks the 36 ring segments (`q.id − 5100` = k, top = k 27), `q.petal` the
+  petal (top = 9), `q.petal < 0` the centre. Recolour with `col`, dim with `lit`.
+- Drafts without 08-end: concat `out/00…07` with ffmpeg and cut `audio/build/film.wav` to that length (compile.mjs needs
+  every `NN-*` render, and 08-end is still the OT card).
