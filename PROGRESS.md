@@ -5,9 +5,10 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 2 done — draft waiting for the user's review** (`out/sprint2-draft.mp4`, silent: 01-nativity 21 s,
-02-baptism 22 s, joint J1 between them). After sign-off: Sprint 3 (03-light, 04-supper) from the board shots in
-`clips/board.js`, **with J2 (02 → 03) and J3 (03 → 04)** — see the joints rule in Decisions.
+**Sprint 3 done — draft waiting for the user's review** (`out/sprint3-draft.mp4`, silent, 88 s: 01 21 s · 02 23 s ·
+03-light 22 s · 04-supper 22 s, joints J1–J3). After sign-off: Sprint 4 (05-cross, 06-resurrection) from the board
+shots in `clips/board.js`, **with J4 (04 → 05) and J5 (05 → 06)** — 04 ends with `return st` and its caption already
+names the fifth window.
 
 ## Decisions (locked)
 - **Folder / repo:** own folder `bible-nt/`, own git repo; `bible-story/` and `_kit/` are never edited from here.
@@ -48,7 +49,16 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   J1 (01 → 02, t0 17.6): the camera rises from the manger to the star, which swells and whitens into a white-out
   (`expo` up to 5, glass swap at u .56 under the glare); the glare settles into the cold dawn and the camera pulls back
   to 02's opening wide. 02 → 03 (J2) comes with 03 in Sprint 3.
-- [ ] **3 · 03-light, 04-supper**
+- [x] **3 · 03-light, 04-supper** (2026-10-02, in review)
+  J2 (02 → 03, t0 18.8; 02 now 23 s): all but the ray goes dark as the camera pulls back, so only Jesus' lancet shines;
+  blackout (swap) at u .46–.54; the noon band grows outward from lancet II (`sunU` LX[1] → 0, `bandW` 300 → 3200).
+  03: noon wide, lancet III (the man born blind) matted dark; push to II–III, Jesus blends bless → touchEyes, a white
+  `bigStar` kindles in his hand (6.0–9.6); tilt down to the pool in IV, he washes (kneelWash → kneelSee, flare at 13);
+  III's matting lifts from his eyes outward in 8 ragged steps (14.2–17), he blends blindStand → lookUp.
+  J3 (03 → 04, t0 18.8): the noon band slides off to the right (`sunU` → 1300, `bandW` → 600: dark sweeps left → right),
+  blackout at u .47–.53, the amber band enters from the left (−1300 → 0). 04: dusk table wide; push to the bread held
+  in Jesus' hands (Jesus moved to x 0, loaf at (LX[1]+78, 420)), it parts 7.4–9; pan to the cup, which kindles ruby
+  (`pts` 3.6) while the band sinks (`sunI` 2.6 → .6, `sz` 2.1 → 2.8).
 - [ ] **4 · 05-cross, 06-resurrection**
 - [ ] **5 · 07-jerusalem + score**
 - [ ] **6 · Deliver**: joint review, cards, newcomer review → captions, compile, check, srt, poster, GitHub
@@ -76,5 +86,9 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   whole lancets.
 - 07 light (no sun, Rev 21:23): `glory` in board.js — a white band `sunI` 1.6, `sz` 1.3 (long floor patch), `raysK` 0 and
   `haze` .08 so there are no shafts in the air, only colour on the floor; window glow `pts` at y 150, 1.8.
+- A glow `pts` on noon-lit glass is invisible: give a light in a hand a glass body too (03: white `bigStar` in the palm).
+- A band swept off the window must finish before the blackout starts (J3 v1 blacked out mid-sweep and hid it):
+  sweep u .02–.42, blackout .38–.47.
+- Unlit-pane reveal: `03-light.js` `dim()` = matting over `lancetPath` minus a ragged polygon (evenodd), radius stepped.
 - `board.js` sets `window.BOARD` (the runtime resets `window.CLIP` to the main clip after loading `uses`), so a dev
   clip can `uses: ['_glass', 'board']` and call `window.BOARD.shot(id, E)` (sf.js does).
