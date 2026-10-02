@@ -5,9 +5,9 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 1 done — v1.1 waiting for the user's review** (`docs/castsheet.png`, `docs/storyboard.png` v1.1,
-`docs/styleframes.png`). After sign-off: Sprint 2 (01-nativity, 02-baptism), starting each chapter from its board
-shots in `clips/board.js` (`BOARD.shot(id, E)` gives the lit state of any board shot).
+**Sprint 2 done — draft waiting for the user's review** (`out/sprint2-draft.mp4`, silent: 01-nativity 21 s,
+02-baptism 22 s, joint J1 between them). After sign-off: Sprint 3 (03-light, 04-supper) from the board shots in
+`clips/board.js`, **with J2 (02 → 03) and J3 (03 → 04)** — see the joints rule in Decisions.
 
 ## Decisions (locked)
 - **Folder / repo:** own folder `bible-nt/`, own git repo; `bible-story/` and `_kit/` are never edited from here.
@@ -22,6 +22,10 @@ shots in `clips/board.js` (`BOARD.shot(id, E)` gives the lit state of any board 
   Carved title `LVX · MVNDI` (John 8:12, Vulgate), answering `FIAT · LVX`; `GX.TITLE`.
 - **Arc of the light:** the OT's light came from outside (the sun band); here the light moves inside the glass, until
   07 needs no sun at all (Rev 21:23).
+- **Joints are built in the sprint that builds the chapters** (user, 2026-09-30; the OT film deferred them to the
+  Deliver sprint and drafts showed one-frame hard cuts). Every boundary between two chapters of the same sprint gets
+  its `J` (camera move + hidden glass swap) before the draft is rendered; the sprint's last chapter gets its joint in
+  the next sprint, together with the chapter after it. A draft never shows a hard cut between windows.
 - Carried over from the OT film (locked there): 16:9 1920×1080, 24 fps, figures step at 8 fps; 繁體中文 (和合本) above,
   English (KJV) below, no narration; Cinzel / IM Fell English / Noto Serif TC; music in code (organ, recorder, harp,
   D Dorian, 80 BPM) + glass foley; one window and one glass per chapter; continuous camera inside a chapter; glass swaps
@@ -34,13 +38,26 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
 - [x] **1 · Brief + cast + storyboard**: TREATMENT · cast sheet v1 · glass keys · board v1.1 · style frames (2026-09-30)
   v1.1: 01 star r 64 + brighter glow at the wides; pearl gate redrawn (wide nacre arch, gold doorway, street widening
   toward us — v1's slim white arch read as a candle); 07 floor light (see Notes); `sf.js` = 01-3 · 04-3 · 07-3 clean
-- [ ] **2 · 01-nativity, 02-baptism**
+- [x] **2 · 01-nativity, 02-baptism** (2026-09-30, in review)
+  01: in from black (fadeIn 0–1.4); the star of Bethlehem moves from the first frame (key path: drifts in I, crosses the
+  mullion fast 6.9–7.7, settles over the stable in II at 11.2); camera follows; the child kindles 12–14.5 (warm `pts`
+  on the manger + Mary's face), the moon band dims to .7. 02: truck along the Jordan → II–III; the heavens open = a
+  gold/white ray cut into lancet II from the white roundel down, 7 pieces one by one, while the band narrows onto II;
+  the dove comes out of the roundel down the ray (camera follows it), settles over Jesus' head in a flare at 14.2;
+  John blends bless → bow. Both end on the next chapter's name.
+  J1 (01 → 02, t0 17.6): the camera rises from the manger to the star, which swells and whitens into a white-out
+  (`expo` up to 5, glass swap at u .56 under the glare); the glare settles into the cold dawn and the camera pulls back
+  to 02's opening wide. 02 → 03 (J2) comes with 03 in Sprint 3.
 - [ ] **3 · 03-light, 04-supper**
 - [ ] **4 · 05-cross, 06-resurrection**
 - [ ] **5 · 07-jerusalem + score**
-- [ ] **6 · Deliver**: joints, cards, newcomer review → captions, compile, check, srt, poster, GitHub
+- [ ] **6 · Deliver**: joint review, cards, newcomer review → captions, compile, check, srt, poster, GitHub
 
 ## Notes
+- `GX.joint` needs `this.J` (it reads `J.next`): a chapter without its joint yet (the sprint's last) returns `st`.
+- A glass piece moving between lancets (the star): draw it in both lancets at the same world position; each lancet
+  clips it, so it passes behind the mullion. Keep the crossing short (≈ .8 s), it vanishes there.
+- White on white disappears: the dove on the ray needs a gold ray and a dove scaled 1.7 (wider than the ray).
 - `clips/ot-genesis.js` has no joint (`uses` without `02-eden`; `GX.joint` returns the state as is when the next
   clip isn't loaded). `08-end.js` still holds the OT content (rewrite in Sprint 6).
 - NT cast (`sg/figure.js` CAST): jesus, jesusRisen (gold mantle, cross-staff), mary (blue veil = `head: 'cloth'`,
