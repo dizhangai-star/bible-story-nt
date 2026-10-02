@@ -345,6 +345,28 @@ window.GX = {
     P.piece(smooth([[cx - 18, gy + 50, 1], [cx + 18, gy + 50, 1], [cx + 60, 606, 1], [cx - 60, 606, 1]]), COL.gold2, { id: id + 4, lead: 3.4, mat: false });    // the street of gold
     this.JEWELS.forEach((c, k) => { if (k % 2 === (id % 2)) return; const x = cx - 140 + (k >> 1) * 56; P.piece(circle(x, y + 8, 11), c, { id: id + 10 + k, lead: 3, mat: false }); });
   },
+  // the rent veil (Matt 27:51, 05) and its scars (06): a jagged spine from the rod to the fringe, the pane split into
+  // 4 rows of left/right shards along it (they part row by row, top to bottom), and branch cracks at each row's top
+  tear(E, cx, seed) {
+    const K = cx + ':' + seed; this._tear = this._tear || {};
+    if (this._tear[K]) return this._tear[K];
+    const R = E.mulberry(seed), spine = [], Y = [-300, -90, 120, 330, 570];
+    for (let y = -300; y <= 570; y += 30) spine.push([cx + (R() - .5) * 30, y]);
+    const poly = (pts) => { const p = new Path2D(); pts.forEach((q, k) => k ? p.lineTo(q[0], q[1]) : p.moveTo(q[0], q[1])); p.closePath(); return p; };
+    const rows = Y.slice(0, 4).map((y0, i) => {
+      const y1 = Y[i + 1], seg = spine.filter((q) => q[1] >= y0 && q[1] <= y1), m = (y0 + y1) / 2;
+      const sh = [-1, 1].map((s, j) => ({ p: poly([[cx + s * 170, y0], ...seg, [cx + s * 170, y1]]), c: [cx + s * 85, m], inner: true, k: j }));
+      const [bx, by] = seg[0];
+      return { y0, y1, m, sh, br: i ? this.cracks(E, cx, bx, by, seed + 10 + i, 4) : [] };
+    });
+    return (this._tear[K] = { spine, rows });
+  },
+  // the tear healed into lead, its lines catching gold light (gold 0..1): the break that shines
+  scars(E, P, tr, gold = 0) {
+    const lines = [tr.spine, ...tr.rows.flatMap((r) => r.br.map((c) => c.pts))];
+    lines.forEach((pts) => { const p = new Path2D(); pts.forEach((q, k) => k ? p.lineTo(q[0], q[1]) : p.moveTo(q[0], q[1])); P.lead(p, 3.4 - 1.4 * gold);
+      if (gold > 0) { P.g.save(); P.g.strokeStyle = `rgba(255,222,140,${gold})`; P.g.lineWidth = 9 * gold; P.g.lineJoin = 'round'; P.g.stroke(p); P.g.restore(); } });
+  },
   // rain: grisaille streaks painted on the glass, stepped (t already stepped by the caller)
   rain(E, P, cx, t, y1, id, a = .5) {
     const r = E.mulberry(id);

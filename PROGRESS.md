@@ -5,10 +5,10 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 3 done — draft waiting for the user's review** (`out/sprint3-draft.mp4`, silent, 88 s: 01 21 s · 02 23 s ·
-03-light 22 s · 04-supper 22 s, joints J1–J3). After sign-off: Sprint 4 (05-cross, 06-resurrection) from the board
-shots in `clips/board.js`, **with J4 (04 → 05) and J5 (05 → 06)** — 04 ends with `return st` and its caption already
-names the fifth window.
+**Sprint 4 done — draft waiting for the user's review** (`out/sprint4-draft.mp4`, silent, 01–06 ≈ 136 s: 01 21 s ·
+02 23 s · 03 22 s · 04 22 s · 05-cross 25 s · 06-resurrection 23 s, joints J1–J5). After sign-off: Sprint 5
+(07-jerusalem + score), **with J6 (06 → 07)** — 06 ends with `return st`, its caption already names the seventh window,
+and its camera already pulls back to the wide (lancet I's gold scars in view) for the hand-off.
 
 ## Decisions (locked)
 - **Folder / repo:** own folder `bible-nt/`, own git repo; `bible-story/` and `_kit/` are never edited from here.
@@ -59,7 +59,20 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   blackout at u .47–.53, the amber band enters from the left (−1300 → 0). 04: dusk table wide; push to the bread held
   in Jesus' hands (Jesus moved to x 0, loaf at (LX[1]+78, 420)), it parts 7.4–9; pan to the cup, which kindles ruby
   (`pts` 3.6) while the band sinks (`sunI` 2.6 → .6, `sz` 2.1 → 2.8).
-- [ ] **4 · 05-cross, 06-resurrection**
+- [x] **4 · 05-cross, 06-resurrection** (2026-10-02, in review)
+  J4 (04 → 05, t0 18.8): the dusk band dies as the camera pulls back, so only the ruby cup shines; blackout u .36–.53;
+  the hard noon band comes up on the hill (the central cross stands where the cup stood).
+  05: noon wide, veil (ruby) in I, three crosses II–IV; slow push; the band fails 5.6–10 (`sunI` 2.7 → .22) as the
+  camera arrives at the cross; a gold `pts` on the halo goes out at "gave up the ghost" (11.6–13); silence; in the dark
+  the dim band narrows onto I (`sunU` → LX[0], `bandW` → 330) as the camera turns to the veil; 16.4 the veil is rent
+  top to bottom (`GX.tear`: spine grows over 1.6 s, 4 rows of left/right shards part .4 s apart, branch cracks), a
+  narrow white band strikes I, a flash runs down the tear, a short camera quake.
+  J5 (05 → 06, t0 21): the light on the veil narrows (`bandW` → 120) as the camera pulls back; blackout u .34–.54;
+  the night moon band on the garden.
+  06: night wide → push to the tomb (II); silence; the stone rolls 7–10, the door turns gold, warm `pts` from inside;
+  dawn 11–14.6 (`mixState(night, dawn)`); pan to III–IV, lancet IV's matting lifts from the risen Christ's halo in 8
+  steps (13.2–15.8, as 03); "Mary" 16.2: Magdalene blends kneelLook → kneelSee; lancet I carries the veil's tear as
+  lead scars (`GX.scars`) that turn gold with the dawn; pull back to the wide 19.4–23 to show them.
 - [ ] **5 · 07-jerusalem + score**
 - [ ] **6 · Deliver**: joint review, cards, newcomer review → captions, compile, check, srt, poster, GitHub
 
@@ -90,5 +103,10 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
 - A band swept off the window must finish before the blackout starts (J3 v1 blacked out mid-sweep and hid it):
   sweep u .02–.42, blackout .38–.47.
 - Unlit-pane reveal: `03-light.js` `dim()` = matting over `lancetPath` minus a ragged polygon (evenodd), radius stepped.
+- `GX.tear(E, cx, seed)` is cached geometry: 05 (rent) and 06 (scars) call it with the same cx/seed (LX[0], 9350) so
+  the scars are the very tear. Gold over lead: `P.lead` paints over `P.g`, so the gold stroke must be wider (9) than the
+  lead (thinned to 2) or it never shows.
+- `GX.mixState` needs `cam` on both states (camMix), even when the clip sets `st.cam` afterwards.
+- A log-zoom push from .5 to 1.8 over 3 s reads as a jump in the middle: add an intermediate key (06: 2.4 → 4.6 → 6.8).
 - `board.js` sets `window.BOARD` (the runtime resets `window.CLIP` to the main clip after loading `uses`), so a dev
   clip can `uses: ['_glass', 'board']` and call `window.BOARD.shot(id, E)` (sf.js does).

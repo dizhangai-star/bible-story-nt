@@ -4,15 +4,26 @@
 // the cup. Beats (TREATMENT §4), one continuous camera: 04-1 the table · 04-2 the bread · 04-3 the cup.
 window.CLIP = {
   id: '04-supper',
-  uses: ['_glass'],
+  uses: ['_glass', '05-cross'],
   duration: 22,
-  timing: { fadeIn: [-1, 0], fade: [22, 22] },   // J3 brings the picture in; J4 (→ 05) comes with 05 in Sprint 4
+  timing: { fadeIn: [-1, 0], fade: [22, 22] },   // J3 brings the picture in, J4 hands it on
   caps: [
     [0.8, 4.8, 'And when the hour was come, he sat down, and the twelve apostles with him.', '時候到了，耶穌坐席，使徒也和他同坐。'],
     [6.0, 10.6, 'And he took bread, and brake it, saying, This is my body which is given for you.', '又拿起餅來，擘開，說：這是我的身體，為你們捨的。'],
     [12.4, 17.6, 'This cup is the new testament in my blood, which is shed for you.', '這杯是用我血所立的新約，是為你們流出來的。'],
     [18.6, 21.6, 'The Fifth Window · The Cross', '第五扇窗 · 十字架'],   // the next chapter's name (J4)
   ],
+  // J4 · the cup → the hill: the dusk band dies and the camera pulls back, so for a moment only the ruby cup shines in
+  // the dark hall; then it goes out too (the glass changes in the dark) and the hard noon band comes up on the hill of
+  // the three crosses, the central one standing where the cup stood
+  J: { next: '05-cross', t0: 18.8,
+    A(E, a, b, u) {
+      const { ss, seg, LX } = E, GX = window.GX, M = [LX[2] * .5, 330, .75];
+      const pre = u < .5, o = pre ? { ...a } : { ...b }, d = ss(seg(u, 0, .3));
+      if (pre) { o.sunI = a.sunI * (1 - d); o.skyI = a.skyI * (1 - .8 * d); o.roseI = a.roseI * (1 - .8 * d); o.amb = a.amb * (1 - .4 * d); }
+      o.cam = pre ? GX.camMix(a.cam, M, ss(seg(u, 0, .5))) : GX.camMix(M, b.cam, ss(seg(u, .5, 1)));
+      return GX.blackout(o, pre ? ss(seg(u, .36, .47)) : 1 - ss(seg(u, .53, .68)));
+    } },
   T: { brk: 7.4, broken: 9.0, cup: 12.4, kindled: 15.6, out: 17.4 },
   BREAD: [78, 420],  // the loaf in Jesus' hands (world, x relative to LX[1])
   CUP: [-60, 480],   // the cup's foot (x relative to LX[2]); the wine 64 above
@@ -47,7 +58,7 @@ window.CLIP = {
     st.pts = [];
     if (c > 0) st.pts.push([LX[2] + ux, uy - 66, 30 + 80 * c, 3.6 * c * (1 + .07 * Math.sin(t * 2)), [1, .35, .3]]);
     if (br > 0) st.pts.push([LX[1] + bx, by - 10, 50, 1.4 * br * (1 - c), [1, .8, .5]]);
-    return st;   // Sprint 4: GX.joint(E, this, st, t) with J4 → 05-cross
+    return GX.joint(E, this, st, t);
   },
 };
 // sound: dusk air; a soft clean crack as the bread parts; a low bell and a rising glass line as the cup kindles
