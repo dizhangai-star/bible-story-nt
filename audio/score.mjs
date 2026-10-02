@@ -1,5 +1,5 @@
-// The film's music, written in code per clip (Suno dropped 2026-09-30). Each clip is scored in its own buffer, in
-// clip seconds, cut by the clip's fade and laid at its start in the film (tails never ring into the next chapter; the
+// The film's music, written in code per clip (Suno dropped 2026-09-30; the OT chapters' scores are in ../bible-story).
+// Each clip is scored in its own buffer, in clip seconds, cut by the clip's fade and laid at its start in the film (tails never ring into the next chapter; the
 // hall reverb in music.mjs still carries across the cut). The glass foley (clip sfx: chimes, bells, cracks) is part of
 // the music, so a score leaves those notes to it and plays around them.
 // Instruments: pipe organ, alto recorder, harp. Home key D Dorian, 80 BPM = 0.75 s/beat.
@@ -15,155 +15,134 @@ const SCORES = {
   '08-end'({ organ, recorder }) {
     organ(.4, 5.6, [38, 50, 57], .016, { atk: 1.2 }); organ(2.4, 3.6, [43, 55, 59], .012, { atk: 1.5 }); recorder(2.6, 2.4, 71, .035);
   },
-  // Darkness; the glass foley has the spark (0.8), the six day notes D5…B5 and the bell on the light (7.0).
-  '01-genesis'({ organ, recorder, harp }, A) {
-    organ(1.0, 6.0, [38, 45], .028, { atk: 2.5, amp: (u) => .5 + .5 * u });                    // drone grows under the days
-    const LINE = [62, 64, 65, 67, 69, 71];                                                        // recorder an octave under the glass
-    A.DAYS.forEach((t, k) => { recorder(t, .7, LINE[k], .045 + .006 * k); harp(t, k % 2 ? 45 : 50, .08 + .01 * k); });
-    // "Let there be light": D major (the light is a Picardy third), full organ swell, harp arpeggio, recorder on D5
-    organ(7.0, 2.4, [38, 50, 57, 62, 66, 69], .045, { atk: .25, amp: (u) => 1 - .25 * u });
-    recorder(7.0, 2.2, 74, .1);
-    [50, 57, 62, 66, 69, 74].forEach((m, k) => harp(7.0 + k * .375, m, .15));
-    // the title sweep: G (IV) → C (bVII) → home on D, open fifth, fading with the picture
-    organ(9.4, 1.4, [43, 55, 59, 62], .024); recorder(9.4, .7, 71, .07); recorder(10.15, .6, 69, .065);
-    organ(10.8, 1.4, [48, 55, 60, 64], .022); recorder(10.8, 1.3, 67, .065);
-    organ(12.2, 2.6, [38, 50, 57, 62], .024, { amp: (u) => 1 - .4 * u }); recorder(12.2, 2.0, 62, .06);
-    [50, 57, 62].forEach((m, k) => harp(12.2 + k * .375, m, .12));
-    // J1 (Sprint 6): under the cloud the harmony moves to G, the garden's key; the recorder leads to 02's D5
-    organ(14.6, 2.8, [43, 50, 55], .016, { atk: 1.4 }); harp(15.2, 55, .07); harp(15.95, 59, .06); harp(16.7, 62, .06);
-    recorder(16.3, .9, 71, .04);
-  },
+  // bible-nt: the seven chapters. The leitmotif is the OT film's Genesis line (D E F G A B → D, the six days and the
+  // light); here it is sung by the recorder at the turns (03 he sees, 06 "Mary", 07 the city) and answered in D major.
+  // Joints: a chapter with a joint has no fade, so its last bars ring 1.2 s into the next (score()); they land in the
+  // next chapter's key.
 
-  // G major pastoral (glass D5 · F#5 · G5) → the push darkens to E7 under the glass G#5 (8.6) → the music cuts at 9.4
-  // (near-silence) → the crack (10.2) → silence → the bell (D2, 12.2) → D minor lament, falling, as the light leaves.
-  '02-eden'({ organ, recorder, harp, line, arp }, A) {
+  // Night, a lullaby: the star's glass notes (G major, A6 … D7) are the melody; the score holds a low open D and a
+  // sparse harp as it travels; the child kindles (bell D3, 12.0) → warm D major, the recorder rocks a cradle figure.
+  // J1 (17.6): the white-out swells to a bright D; under the glare the harmony opens to the dawn's low A–D.
+  '01-nativity'({ organ, harp, line, arp }, A) {
     const T = A.T;
-    organ(.4, 5.2, [43, 50, 55, 59], .022, { atk: 1.2 });                                        // G
-    for (let k = 0; k < 5; k++) arp(.9 + k * 1.5, [43, 50, 55, 59], .375, .1 - .01 * k, -.35, k < 4 ? 3.5 : 1.2);   // thinning with the push
-    line([[1.2, .7, 74], [1.95, .33, 71], [2.3, .33, 69], [2.65, .72, 67], [3.4, .72, 69], [4.15, 1.15, 71], [5.35, 1.1, 74]], .06);
-    organ(5.6, 1.4, [40, 52, 55, 59], .024);                                                     // Em — "she took of the fruit"
-    organ(7.0, 1.6, [36, 48, 55, 60, 64], .026);                                                 // C under the glass G5
-    organ(8.6, .8, [40, 50, 56, 62], .03, { rel: .12, amp: (u) => .8 + .4 * u });                // E7 under G#5, cut at 9.4
-    recorder(5.6, 1.3, 76, .055); recorder(7.0, 1.5, 72, .06); recorder(8.6, .8, 74, .065, { rel: .1 });
-    // 9.4 → 12.2: nothing but the crack (foley) and its ring
-    organ(T.out - .2, 17.2 - T.out, [38, 50, 53, 57], .022, { atk: 1.8, amp: (u) => 1 - .3 * u });   // D minor, low
-    harp(T.out, 50, .1); harp(13.7, 45, .08); harp(15.2, 50, .07);
-    line([[12.8, .72, 69], [13.55, .72, 67], [14.3, .72, 65], [15.05, .72, 64], [15.8, 1.4, 62]], .055);   // falls to D
-    // J2 (Sprint 6): a low D pedal holds in the dark, into the storm's D minor
-    organ(17.0, 2.4, [38, 45], .014, { atk: 1.2 });
+    organ(.6, T.kindle - .8, [38, 45], .018, { atk: 2.5, amp: (u) => .6 + .4 * u });                // the night: open D
+    for (let k = 0; k < 6; k++) harp(T.go + .6 + k * 1.5, [55, 59, 62, 59, 55, 57][k], .05, -.35, 4);   // the journey, in G
+    organ(T.go + 4, 4, [43, 50], .012, { atk: 1.5 });                                                 // G under the crossing
+    organ(T.kindle, A.J.t0 - T.kindle + .4, [38, 50, 54, 57], .026, { atk: .5, amp: (u) => 1 - .25 * u });       // D major: the child's light
+    arp(T.kindle, [50, 54, 57, 62, 66], .375, .1);
+    line([[12.9, .72, 66], [13.65, .72, 64], [14.4, 1.1, 62], [15.6, .72, 69], [16.35, .72, 66], [17.1, 1.0, 64]], .045);
+    organ(A.J.t0, 2.2, [50, 57, 62, 66, 69, 74], .022, { atk: 1.0, amp: (u) => .4 + .6 * Math.sin(Math.PI * u) });   // the glare
+    organ(A.J.t0 + 2.0, 1.6, [38, 45, 50], .016, { atk: .8 });                                       // the cold dawn
   },
 
-  // Oppression → surging water (a harp ostinato in eighths, D minor → Bb → C) → hope: F with Noah, the dove lands on
-  // D5 (glass D6, 10.5) → a half cadence on A → the bow: open D (bell 12.4, glass D E F G A) → G, B natural (comfort).
-  '03-flood'({ organ, recorder, harp, line, arp }, A) {
-    organ(.3, 4.5, [38, 45, 50], .02, { atk: 2 });                                               // Dm
-    organ(4.6, 3.2, [34, 46, 50, 53], .024, { atk: .4 });                                        // Bb — the ark
-    organ(7.8, .6, [36, 48, 52, 55], .028, { rel: .5 });                                         // C — the water bears it up
-    const OST = [38, 45, 50, 45];
-    for (let k = 0; k < 20; k++) { const t = .8 + k * .375, bar = t < 4.6 ? 0 : t < 7.8 ? -4 : -2;   // follow the bass
-      harp(t, OST[k % 4] + bar, .06 + .004 * k, -.45); }
-    organ(8.2, 2.3, [41, 53, 57, 60], .02, { atk: .6 });                                         // F — Noah, hope
-    organ(10.5, 1.1, [46, 53, 58, 62], .02);                                                     // Bb — the dove lands
-    organ(11.6, .8, [45, 52, 57, 61], .022, { rel: .4 });                                        // A — half cadence
-    line([[8.6, .72, 69], [9.35, .72, 67], [10.1, .38, 69], [10.5, 1.3, 74]], .06);
-    organ(12.4, 1.8, [38, 50, 57, 62], .026, { atk: .3 });                                       // the bow: open D
-    arp(12.4, [50, 57, 62, 69], .375, .1);
-    organ(14.2, 1.8, [43, 55, 59, 62], .024);                                                    // G (Dorian IV)
-    arp(14.2, [43, 50, 55, 59, 62], .375, .09);
-    organ(16.0, 3.4, [38, 50, 57, 62, 69], .024, { amp: (u) => 1 - .35 * u });                   // home, to the floor
-    line([[14.4, 1.0, 71], [15.4, .72, 69], [16.15, .72, 67], [16.9, .72, 69], [17.65, 1.6, 74]], .055);
-    // J3 (Sprint 6): the sun sets on the floor (G, recorder falling), then night: a low open G, Abraham's key
-    organ(19.2, 1.8, [43, 55, 59, 62], .018, { atk: .6, amp: (u) => 1 - .4 * u }); line([[19.3, .9, 71], [20.2, 1.2, 67]], .04);
-    organ(20.8, 2.6, [31, 43], .016, { atk: 1.2 }); harp(21.6, 50, .06); harp(22.35, 55, .05);
+  // Dawn at the Jordan: a harp ostinato (the water) on D; "the heavens were opened": the band's glass climbs D5…D6
+  // (5.4–8.0) over an organ swell to D major; the dove comes down with the recorder (A5 → D5) while the harmony
+  // settles G → D; at the landing (bell D3 + glass D7, 14.2) "my beloved Son": a G → A → D cadence. J2 (18.8): the
+  // window goes dark but the ray — one held A; the noon comes up on an open D.
+  '02-baptism'({ organ, harp, line, arp }, A) {
+    const T = A.T, OST = [38, 45, 50, 45];
+    organ(.4, T.open - .2, [38, 45], .016, { atk: 2.0 });
+    for (let k = 0; k < 13; k++) harp(.8 + k * .375, OST[k % 4], .05 + .003 * k, -.45, 2.5);         // the river
+    organ(T.open, 3.0, [38, 50, 54, 57], .022, { atk: 1.4 });                                        // the heavens open
+    organ(T.dove, 2.4, [43, 50, 55, 59], .018, { atk: .8 }); organ(T.dove + 2.4, 2.4, [38, 50, 54, 57], .018, { atk: .8 });
+    line([[T.dove + .2, 1.1, 81], [T.dove + 1.4, .72, 79], [T.dove + 2.15, .72, 78], [T.dove + 2.9, 1.1, 76], [T.dove + 4.1, .72, 74], [T.dove + 4.85, 1.0, 74]], .04);
+    organ(T.bow, 1.5, [43, 55, 59, 62], .024, { atk: .3 });                                          // G — "my beloved Son"
+    organ(T.bow + 1.5, 1.5, [45, 52, 57, 61], .024);                                                 // A
+    organ(T.bow + 3.0, 1.0 + A.J.t0 - T.bow - 3.0, [38, 50, 57, 62, 66], .026, { amp: (u) => 1 - .4 * u });   // D
+    arp(T.bow + 3.0, [50, 57, 62, 66, 69], .375, .09);
+    line([[T.bow + .2, 1.3, 71], [T.bow + 1.5, 1.4, 69], [T.bow + 3.0, 1.6, 66]], .045);
+    line([[A.J.t0 + .4, 2.2, 69]], .03);                                                               // only the ray
+    organ(A.J.t0 + 2.2, 2.0, [38, 45, 50], .018, { atk: .8 });                                       // noon
   },
 
-  // Night, G major: the stars are the melody (glass G pentatonic climbing from 1.8); the score stays low and slow —
-  // a G drone, one recorder phrase under the gaze, C → Em → D as the stars multiply, full G on the bell (10.4).
-  '04-abraham'({ organ, recorder, harp, line }, A) {
-    organ(.4, 6.0, [43, 50], .02, { atk: 2.5 });                                                 // G open fifth, alone
-    line([[1.4, 1.5, 62], [2.9, 1.5, 67], [4.4, 1.2, 66], [5.6, 1.0, 62]], .045);                // D · G · F# · D, under the stars
-    harp(1.8, 43, .07); harp(4.8, 50, .06);
-    organ(6.4, 1.6, [36, 48, 55, 60, 64], .02, { atk: .8 });                                     // C — "so shall thy seed be"
-    organ(8.0, 1.2, [40, 52, 55, 59], .02);                                                      // Em
-    organ(9.2, 1.2, [38, 50, 54, 57], .022);                                                     // D
-    organ(10.4, 3.9, [43, 50, 55, 59, 62, 67], .026, { atk: .5, amp: (u) => 1 - .35 * u });      // G — righteousness
-    line([[6.4, 1.5, 71], [7.9, .72, 69], [8.65, .72, 67], [9.4, .95, 69], [10.4, 1.5, 74], [11.9, 2.2, 71]], .055);
-    [43, 50, 55, 59, 62].forEach((m, k) => harp(10.4 + k * .375, m, .08));
-    // J4 (Sprint 6): the last star (glass, clip sfx) over a G that darkens to D minor as it becomes the fire
-    organ(14.4, 1.4, [43, 50], .014, { atk: .8 }); organ(15.6, 2.0, [38, 45, 50], .016, { atk: 1.0, amp: (u) => .7 + .5 * u });
-  },
-
-  // Pursuit: a driving low harp ostinato (dotted, D minor → Bb → C) under a dark organ, crescendo; Moses (4.8): it stops;
-  // G under the glass D-G-B (5.4); D major on the rays + bell (6.8); the sea parts on a rising bass C → D (the glass
-  // G3 A3 C4 D4 G4); the walls stand on full G (bell 12.4) and the recorder sings Israel through.
-  '05-exodus'({ organ, recorder, harp, line, arp }, A) {
+  // Noon, but one pane is dark: D minor, thin and low, an unanswered recorder (A G F … E). The light gathers in his
+  // hand (glass D6 F#6 A6 B6, 6–8.8): D major comes in note by note. Siloam: harp water (10–13). He sees: the glass
+  // climbs D5…D6 (14.55–17) and the recorder sings the Genesis line, now in D major, onto D5 with the bell (17.0).
+  // J3 (18.8): the noon passes; the dusk comes in on Bb.
+  '03-light'({ organ, recorder, harp, line, arp }, A) {
     const T = A.T;
-    organ(.2, 2.4, [38, 45, 50], .02, { atk: 1.2 });                                             // Dm
-    organ(2.6, 1.4, [34, 46, 50, 53], .022);                                                     // Bb
-    organ(4.0, .8, [36, 48, 52, 55], .026, { rel: .4, amp: (u) => .8 + .4 * u });               // C, pushing
-    const PAT = [[0, 38, 1], [.5625, 38, .6], [.75, 45, .8], [1.125, 50, .7]];                   // one 0.75-s beat pair, dotted
-    for (let t0 = .6; t0 < T.moses - .3; t0 += 1.5) for (const [dt, m, a] of PAT) {
-      const t = t0 + dt, shift = t < 2.6 ? 0 : t < 4.0 ? -4 : -2;
-      harp(t, m + shift, (.06 + .012 * t) * a, -.4);
-    }
-    organ(T.raise, 1.4, [43, 55, 59], .022, { atk: .5 });                                        // G — the rod rises
-    organ(T.rays, 1.4, [38, 50, 57, 62, 66, 69], .034, { atk: .15 });                            // D major — the rays
-    organ(8.6, 1.6, [36, 48, 55, 60, 64], .022, { atk: .6 });                                    // C — the sea parts
-    organ(10.2, .7, [40, 52, 55, 59], .022);                                                     // Em
-    organ(10.9, 1.5, [38, 50, 54, 57, 62], .026);                                                // D
-    arp(8.8, [48, 55, 60, 64], .35, .07); arp(10.9, [50, 54, 57, 62], .35, .08);
-    organ(T.open, 4.9, [43, 50, 55, 59, 62, 67], .034, { atk: .3, amp: (u) => 1 - .35 * u });    // G — the walls stand
-    arp(T.open, [43, 50, 55, 59, 62, 67], .375, .1);
-    line([[12.4, 1.5, 74], [13.9, .72, 71], [14.65, .72, 72], [15.4, .72, 69], [16.15, 1.1, 67]], .07);
-    // J5 (Sprint 6): dawn after the crossing: G → G minor → Bb, 06's dark key, as the band settles on the giant
-    organ(17.3, 1.5, [43, 55, 58, 62], .018, { atk: .5 }); recorder(17.4, 1.3, 70, .045);
-    organ(18.8, 2.4, [34, 46, 53], .018, { atk: .8 }); harp(18.8, 46, .07); harp(19.55, 53, .06);
+    organ(.4, T.touch + .4, [38, 45, 53], .016, { atk: 1.8 });                                      // D minor, low
+    line([[1.6, 1.1, 69], [2.75, .72, 67], [3.5, 1.4, 65], [5.0, .9, 64]], .035);                   // no answer
+    organ(T.glow, 1.0, [38, 50], .018); organ(7.0, .9, [38, 50, 54], .02); organ(7.9, .9, [38, 50, 54, 57], .022);
+    organ(8.8, T.go - 8.8 + .6, [38, 50, 54, 57, 59], .022, { amp: (u) => 1 - .4 * u });           // the light in his hand
+    for (let k = 0; k < 8; k++) harp(T.go + .4 + k * .375, [50, 57, 62, 57][k % 4], .06, -.45, 2.5);   // the pool
+    organ(T.go + .2, 2.8, [43, 50, 55], .014, { atk: 1.0 });
+    organ(T.see, 2.8, [38, 50, 54, 57], .02, { atk: .6 });                                           // he sees
+    line([[T.see + .35, .35, 62], [T.see + .7, .35, 64], [T.see + 1.05, .35, 66], [T.see + 1.4, .35, 67], [T.see + 1.75, .35, 69], [T.see + 2.1, .35, 71], [T.see + 2.45, .35, 73]], .045);
+    organ(T.seen, A.J.t0 - T.seen + .4, [38, 50, 57, 62, 66, 69], .034, { atk: .2, amp: (u) => 1 - .35 * u });
+    recorder(T.seen, 1.9, 74, .085); arp(T.seen, [50, 57, 62, 66, 69, 74], .375, .12);
+    organ(A.J.t0 + 1.6, 3.0, [34, 46, 53], .016, { atk: 1.0 });                                      // dusk: Bb
   },
 
-  // Fear: heavy low steps (harp, every 1.5 s) under a Bb → A-major organ that swells to the whip pan (5.2) and cuts;
-  // courage: D major, harp eighths then sixteenths as the sling whirls (glass D E G A B D rising); all stops at the
-  // release (9.4); the crack (10.0) in silence; the bell (12.2) → G major, the recorder home.
-  '06-david'({ organ, recorder, harp, line, arp }, A) {
+  // Dusk, a slow chorale (Bb · F · Gm · A). The bread breaks (crack 7.6): the music stops for it, then goes on, lower.
+  // The cup kindles (bell A2 + glass A5 B5 D6 E6, 12.4–15.1): A → D major, "the new testament". J4 (18.8): the warm
+  // band dies; the hard noon of the hill comes in on a bare low D with a dissonant E flat above it.
+  '04-supper'({ organ, recorder, harp, line }, A) {
     const T = A.T;
-    organ(.4, 3.0, [34, 41, 50], .024, { atk: 1.5 });                                            // Bb (dark, low)
-    organ(3.4, T.whip - 3.4, [33, 40, 49, 52], .028, { rel: .1, amp: (u) => .7 + .6 * u });      // A — tension to the whip
-    for (let t = .8; t < T.whip; t += 1.5) harp(t, 38, .09, -.2);                                // the giant's steps
-    for (let k = 0, t = T.spin; t < T.release - .05; k++) {                                      // the sling whirls faster
-      harp(t, [50, 54, 57, 62][k % 4], .06 + .005 * k, .3, T.release - t + .1); t += t < 7.7 ? .375 : .1875; }
-    for (let t = T.spin; t < T.release - .2; t += .75) organ(t, .55, [38, 50, 54, 57], .016 + .002 * (t - T.spin), { atk: .04, rel: .15 });
-    recorder(7.7, 1.6, 74, .06, { rel: .08 }); recorder(8.45, .9, 78, .07, { rel: .08 });
-    // release → crack → fall: silence (foley only)
-    organ(T.pull, 3.0, [43, 50, 55, 59, 62], .026, { atk: .8, amp: (u) => 1 - .3 * u });          // G — the giant kneels
-    arp(T.pull, [43, 50, 55, 59, 62], .375, .08);
-    line([[12.6, 1.0, 71], [13.6, .72, 69], [14.35, 1.0, 67]], .055);
-    // J6 (Sprint 6): sunset: G → Em as the light slides off, then the night's low D (07's drone)
-    organ(15.2, 1.5, [43, 50, 55, 59], .018, { amp: (u) => 1 - .3 * u }); organ(16.4, 1.2, [40, 52, 55, 59], .016);
-    recorder(15.4, .9, 66, .04); recorder(16.4, 1.3, 64, .035); organ(17.2, 2.2, [38, 45], .016, { atk: 1.0 });
+    organ(.4, 2.2, [34, 46, 53, 58], .02, { atk: 1.4 }); organ(2.6, 2.2, [41, 53, 57, 60], .02);   // Bb · F
+    organ(4.8, 2.4, [43, 50, 55, 58], .02, { rel: .5 });                                             // Gm — and the stop
+    line([[1.0, 1.5, 65], [2.6, 1.4, 69], [4.1, .72, 67], [4.85, 1.9, 67]], .04);
+    organ(T.broken - .4, 3.0, [38, 45, 53], .016, { atk: 1.0 });                                   // after the break, low
+    harp(T.broken, 50, .07); harp(T.broken + .75, 53, .06); harp(T.broken + 1.5, 57, .06);
+    organ(T.cup, 2.6, [33, 45, 52, 57, 61], .02, { atk: .8 });                                       // A — the cup
+    organ(T.kindled - .6, T.out - T.kindled + 1.8, [38, 50, 54, 57, 62], .026, { atk: .4, amp: (u) => 1 - .4 * u });   // D: the new covenant
+    recorder(T.kindled - .4, 2.0, 66, .06); recorder(T.kindled + 1.6, 1.6, 62, .05);
+    organ(A.J.t0 + 1.8, 2.4, [26, 38], .02, { atk: 1.0 }); organ(A.J.t0 + 2.4, 1.6, [51], .008, { atk: .8 });   // the hill
   },
 
-  // Night stillness (D drone); the mends: G under the first (glass D G D A), Em under the second (E A G D), a soft harp
-  // on each weld beat; the lamp (bell A2, 12.0): the Genesis line returns on the recorder, D E F G A over F → C → Bb → A;
-  // near-silence; the dawn bell (D3, 16.4): D major, as at "Let there be light", the harp arpeggio and D5 again.
-  '07-promise'({ organ, recorder, harp, line, arp }, A) {
-    const T = A.T, M0 = A.MEND[0], M2 = A.MEND[2];
-    organ(.4, M0 - .4, [38, 45], .022, { atk: 2.5 });                                            // night
-    organ(M0, 3.9, [43, 50, 55, 59], .02, { atk: .6 });                                          // G — Eden mended
-    for (let k = 0; k < 4; k++) harp(M0 + k * .75, [50, 55, 50, 57][k], .07);
-    line([[M0, 1.85, 71], [6.15, 1.9, 69]], .045);
-    organ(M2, 1.85, [40, 52, 55, 59], .02);                                                      // Em — Goliath mended
-    organ(10.05, 1.95, [45, 52, 57], .02);                                                       // A (open)
-    for (let k = 0; k < 4; k++) harp(M2 + k * .75, [52, 57, 52, 59][k], .07);
-    line([[8.4, 1.5, 67], [9.9, 1.9, 64]], .045);
-    // the lamp: the six-day line comes back, one per beat
-    organ(T.lamp, 1.5, [41, 53, 57, 60], .024, { atk: .4 });                                     // F
-    organ(13.5, .75, [36, 48, 55, 60, 64], .024);                                                // C
-    organ(14.25, .75, [34, 46, 53, 58, 62], .024);                                               // Bb
-    organ(15.0, .55, [33, 45, 52, 57, 61], .026, { rel: .35 });                                  // A — then near-silence
-    line([[12.0, .72, 62], [12.75, .72, 64], [13.5, .72, 65], [14.25, .72, 67], [15.0, .6, 69]], .06);
-    // dawn: "Arise, shine"
-    organ(T.dawn, 2.8, [38, 50, 57, 62, 66, 69], .04, { atk: .25, amp: (u) => 1 - .3 * u });
-    recorder(T.dawn, 2.6, 74, .09);
-    [50, 57, 62, 66, 69, 74].forEach((m, k) => harp(T.dawn + k * .375, m, .13));
+  // The sixth hour: a low D minor lament; as the band fails (5.6–10) the bass walks down D C Bb A and the organ thins;
+  // "it is finished" (11.6): the recorder falls to D and stops on "gave up the ghost" (13.0). Silence until the veil
+  // (16.4, crack + glass falling). After the bell (D2, 18.2): a bare open fifth, no third. J5 (21): low and quiet.
+  '05-cross'({ organ, recorder, line }, A) {
+    const T = A.T;
+    organ(.4, T.fail - .2, [38, 45, 50, 53], .02, { atk: 1.6 });                                     // Dm
+    line([[1.2, 1.4, 69], [2.7, .72, 70], [3.45, 1.4, 69], [4.95, 1.4, 65]], .04);
+    [[T.fail, 36], [T.fail + 1.5, 34], [T.fail + 3.0, 33]].forEach(([t, b], k) => organ(t, 1.5, [b, 50 - k], .02 - .003 * k));   // D–C–Bb–A, thinning
+    organ(T.dark - .4, T.finished - T.dark + 1.4, [38, 45], .014, { amp: (u) => 1 - .7 * u, rel: 1.0 });
+    line([[T.finished - .6, .9, 65], [T.finished + .3, .7, 64], [T.finished + 1.0, .9, 62]], .035, { rel: .6 });
+    // T.gone → T.rend: silence (the foley's room tone only)
+    organ(18.2, 2.6, [26, 38, 45], .018, { atk: .4, amp: (u) => 1 - .5 * u });                    // the bare fifth
+    organ(A.J.t0 + .4, 3.6, [38, 45], .01, { atk: 1.5, amp: (u) => 1 - .5 * u });                    // into the garden
+  },
+
+  // Night in the garden: D minor, sparse (grief); silence before the stone (6.2–7.0); under the grind a low A pedal
+  // grows; the light from inside (bell D3, 8.6) turns it to D major, soft; the dawn swells (11–14.6); the risen
+  // Christ's pane (glass D5…D6, 13.5–15.8); "Mary" (bell A3, 16.2): the recorder sings the Genesis line in D major
+  // to D5 and a G → D cadence. J6 (22): the dawn goes out, a high A holds in the dark, a quiet D at the rose's spark.
+  '06-resurrection'({ organ, recorder, harp, line, arp }, A) {
+    const T = A.T;
+    organ(.4, 5.6, [38, 45, 53], .016, { atk: 2.0 });
+    line([[1.4, 1.4, 62], [2.9, .72, 65], [3.65, 1.5, 64], [5.2, .9, 62]], .032);
+    organ(T.roll, T.glow + .6 - T.roll, [33, 45], .018, { atk: 1.4, amp: (u) => .5 + .5 * u });   // the stone: A pedal
+    organ(T.glow + .6, T.dawn - T.glow - .6, [38, 50, 54, 57], .018, { atk: .8 });                  // "he is not here"
+    organ(T.dawn, T.day - T.dawn + 1.0, [38, 50, 57, 62, 66], .022, { atk: 1.6 });                  // the dawn
+    arp(T.dawn + .4, [50, 57, 62, 66, 69], .75, .07); arp(T.dawn + 4.4, [50, 57, 62], .75, .06);
+    organ(T.mary, 1.6, [38, 50, 54, 57, 62], .028, { atk: .2 });                                    // "Mary"
+    line([[T.mary + .3, .35, 62], [T.mary + .65, .35, 64], [T.mary + 1.0, .35, 66], [T.mary + 1.35, .35, 67], [T.mary + 1.7, .35, 69], [T.mary + 2.05, .35, 71]], .05);
+    recorder(T.mary + 2.4, 1.8, 74, .085);
+    organ(T.mary + 1.6, 1.9, [43, 55, 59, 62], .026); organ(T.mary + 3.5, A.J.t0 - T.mary - 3.5 + .6, [38, 50, 57, 62, 66, 69], .028, { amp: (u) => 1 - .4 * u });
+    arp(T.mary + 3.5, [50, 57, 62, 66, 69, 74], .375, .1);
+    recorder(A.J.t0 + .4, 2.4, 69, .03, { amp: (u) => 1 - .6 * u });                                // in the dark
+    organ(A.J.t0 + 2.4, 1.6, [38, 45], .014, { atk: .5 }); harp(A.J.t0 + 2.5, 62, .06);              // the spark
+  },
+
+  // No sun: the rose's petals light to a rising harp (one note per petal, D major); its stones are set to the glass
+  // (D5 … A6) over a soft D; the pull back opens to G; each gate a bell and a chord (D · G/D · A/D · D); then the
+  // Genesis line, the first film's six days, comes back whole on the recorder and resolves to D5 in full D major
+  // as the window is seen whole, and fades with the picture.
+  '07-jerusalem'({ organ, recorder, harp, line, arp }, A) {
+    const T = A.T, P = [50, 54, 57, 62, 66, 69, 74, 78, 81, 86, 81, 78];
+    organ(.2, T.stones - .2, [38, 45, 50], .016, { atk: 1.2 });
+    P.forEach((m, i) => harp(T.petals + i * T.petalsD / 12, m, .06 + .003 * i, -.3, 3));           // the petals
+    organ(T.stones, T.pull - T.stones + .8, [38, 50, 54, 57], .016, { atk: 1.0 });                  // the stones
+    organ(T.pull + .4, T.city - T.pull - .4, [43, 50, 55, 59], .018, { atk: 1.0 });                 // the pull: G
+    [[38, 50, 54, 57], [38, 50, 55, 59], [38, 52, 57, 61], [38, 50, 57, 62, 66]].forEach((c, k) =>
+      organ(T.city + k * T.cityStep, k < 3 ? T.cityStep : 13.0 - T.city - 3 * T.cityStep, c, .022 + .002 * k));   // the gates
+    line([[13.0, .72, 62], [13.75, .72, 64], [14.5, .72, 65], [15.25, .72, 67], [16.0, .72, 69], [16.75, .72, 71]], .05);
+    organ(13.0, 1.5, [41, 53, 57, 60], .022); organ(14.5, 1.5, [43, 50, 55, 58], .022); organ(16.0, 1.5, [45, 52, 57, 61], .024);   // F · Gm · A
+    organ(T.wide - .25, 22.5 - T.wide + .25, [38, 50, 57, 62, 66, 69], .036, { atk: .3, amp: (u) => 1 - .3 * u });   // D major, the window whole
+    recorder(T.wide - .25, 3.2, 74, .09); arp(T.wide - .25, [50, 57, 62, 66, 69, 74], .375, .12);
+    arp(19.4, [62, 66, 69, 74], .75, .06);
   },
 };
 

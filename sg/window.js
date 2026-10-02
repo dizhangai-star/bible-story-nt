@@ -297,7 +297,7 @@ export function drawLancet(P, i, st = {}) {
 const dim = (hex, k) => { if (k >= 1) return hex; const [r, g, b] = rgb(hex), m = (a, z) => Math.round(z + (a - z) * (.1 + .9 * k)); return '#' + [m(r, 10), m(g, 11), m(b, 18)].map(v => v.toString(16).padStart(2, '0')).join(''); };
 export const ROSE_PARTS = ROSEG;
 export function drawRose(P, o = {}) {
-  ROSEG.forEach((q, k) => P.piece(q.p, o.lit ? dim(q.c, o.lit(q, k)) : q.c, { id: q.id, lead: 5, matW: 8, paint: q.kind === 'sun' ? g => { for (let k = 0; k < 8; k++) { const a = k / 8 * Math.PI * 2; brush(g, [[ROSE.x + Math.cos(a) * 12, ROSE.y + Math.sin(a) * 12], [ROSE.x + Math.cos(a) * 36, ROSE.y + Math.sin(a) * 36]], 3, { color: 'rgba(120,50,10,.45)' }); } } : null }));
+  ROSEG.forEach((q, k) => { const c = o.col ? o.col(q, k) : q.c; P.piece(q.p, o.lit ? dim(c, o.lit(q, k)) : c, { id: q.id, lead: 5, matW: 8, paint: q.kind === 'sun' ? g => { for (let k = 0; k < 8; k++) { const a = k / 8 * Math.PI * 2; brush(g, [[ROSE.x + Math.cos(a) * 12, ROSE.y + Math.sin(a) * 12], [ROSE.x + Math.cos(a) * 36, ROSE.y + Math.sin(a) * 36]], 3, { color: 'rgba(120,50,10,.45)' }); } } : null }); });
 }
 // average colour of what each lancet projects (tints the shafts)
 export const LTINT = [[.45, .6, 1.0], [.95, .85, .6], [.8, .6, .5], [.95, .45, .3]];
