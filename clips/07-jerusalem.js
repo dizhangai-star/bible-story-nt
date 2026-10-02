@@ -11,8 +11,8 @@ window.CLIP = {
   timing: { fadeIn: [-1, 0], fade: [20, 22.5] },   // J6 brings the picture in; the film fades out here
   caps: [
     [0.8, 4.8, 'And he that sat upon the throne said, Behold, I make all things new.', '坐寶座的說：看哪，我將一切都更新了！'],
-    [8.6, 13.4, 'And the city had no need of the sun, neither of the moon, to shine in it: for the glory of God did lighten it.', '那城內又不用日月光照，因有神的榮耀光照。'],
-    [14.2, 19.4, 'And there shall be no night there; and they need no candle, neither light of the sun; for the Lord God giveth them light.', '不再有黑夜；他們也不用燈光、日光，因為主神要光照他們。'],
+    [8.0, 13.4, 'The city had no need of the sun, neither of the moon, to shine in it: for the glory of God did lighten it.', '那城內又不用日月光照，因有神的榮耀光照。'],
+    [14.0, 20.4, 'And there shall be no night there; and they need no candle, neither light of the sun; for the Lord God giveth them light.', '不再有黑夜；他們也不用燈光、日光，因為主神要光照他們。'],
   ],
   T: { petals: .6, petalsD: 2.8, stones: 3.8, stonesD: 3.4, pull: 7.0, city: 9.4, cityStep: .8, cityD: 1.6, wide: 17.0 },
   STEP: 8,   // a pane lights in 8 ragged steps

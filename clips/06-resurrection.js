@@ -9,9 +9,9 @@ window.CLIP = {
   duration: 26,
   timing: { fadeIn: [-1, 0], fade: [26, 26] },   // J5 brings the picture in, J6 hands it on
   caps: [
-    [0.8, 5.2, 'The first day of the week cometh Mary Magdalene early, when it was yet dark, unto the sepulchre.', '七日的頭一日，清早天還黑的時候，抹大拉的馬利亞來到墳墓那裡。'],
+    [0.8, 6.6, 'The first day of the week cometh Mary Magdalene early, when it was yet dark, unto the sepulchre.', '七日的頭一日，清早天還黑的時候，抹大拉的馬利亞來到墳墓那裡。'],
     [8.4, 12.4, 'He is not here: for he is risen, as he said.', '他不在這裡，照他所說的，已經復活了。'],
-    [16.0, 20.0, 'Jesus saith unto her, Mary. She turned herself, and saith unto him, Rabboni.', '耶穌說：馬利亞！馬利亞就轉過來，對他說：拉波尼！'],
+    [16.0, 21.4, 'Jesus saith unto her, Mary. She turned herself, and saith unto him, Rabboni; which is to say, Master.', '耶穌說：馬利亞！馬利亞就轉過來，對他說：拉波尼！（就是夫子的意思）'],
     [22.4, 25.4, 'The Seventh Window · The New Jerusalem', '第七扇窗 · 新耶路撒冷'],   // the next chapter's name (J6)
   ],
   // J6 · Easter dawn → no sun: the dawn band goes out as the camera rises toward the rose (the last sun of the film);
