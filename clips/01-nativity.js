@@ -9,7 +9,7 @@ window.CLIP = {
   duration: 21,
   timing: { fadeIn: [0, 1.4], fade: [21, 21] },   // in from black after the opening card; out = the joint J1
   caps: [
-    [1.4, 5.2, 'And the light shineth in darkness; and the darkness comprehended it not.', '光照在黑暗裡，黑暗卻不接受光。'],
+    [1.4, 5.6, 'And the light shineth in darkness; and the darkness comprehended it not.', '光照在黑暗裡，黑暗卻不接受光。'],
     [6.4, 11.0, 'The star went before them, till it came and stood over where the young child was.', '那星在他們前頭行，直行到小孩子的地方，就在上頭停住了。'],
     [12.6, 17.6, 'For unto you is born this day a Saviour, which is Christ the Lord.', '因今天為你們生了救主，就是主基督。'],
     [18.4, 20.8, 'The Second Window · The Baptism', '第二扇窗 · 受洗'],   // the next chapter's name, while its glass comes (J1)

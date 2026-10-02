@@ -11,9 +11,14 @@ const SCORES = {
   '00-title'({ organ, harp }) {
     organ(.6, 5.0, [38, 45], .016, { atk: 2.0, amp: (u) => 1 - .5 * u }); harp(1.6, 62, .06); harp(2.35, 69, .05); harp(3.1, 74, .05);
   },
-  // End card: after the dawn's D major, a low D and a G that does not resolve (the question stays open).
-  '08-end'({ organ, recorder }) {
-    organ(.4, 5.6, [38, 50, 57], .016, { atk: 1.2 }); organ(2.4, 3.6, [43, 55, 59], .012, { atk: 1.5 }); recorder(2.6, 2.4, 71, .035);
+  // End card: the OT card's G that did not resolve now does — an Amen (G/D → D) under "two windows, one light";
+  // the harp climbs the D major chord and the recorder ends on D5.
+  '08-end'({ organ, recorder, harp }) {
+    organ(.4, 4.8, [38, 50, 57, 62], .016, { atk: 1.2 });                                    // the words: low D
+    organ(4.8, 2.0, [38, 50, 55, 59], .016, { atk: .8 });                                    // A-
+    organ(6.6, 3.4, [38, 50, 54, 57, 62], .02, { atk: .6, amp: (u) => 1 - .7 * u });        // -men
+    [50, 57, 62, 66, 69, 74].forEach((m, i) => harp(6.7 + i * .375, m, .05, -.25, 3));
+    recorder(5.0, 1.6, 71, .04); recorder(6.6, 2.6, 74, .05, { amp: (u) => 1 - .6 * u });
   },
   // bible-nt: the seven chapters. The leitmotif is the OT film's Genesis line (D E F G A B → D, the six days and the
   // light); here it is sung by the recorder at the turns (03 he sees, 06 "Mary", 07 the city) and answered in D major.

@@ -10,7 +10,7 @@ window.CLIP = {
   duration: 23,
   timing: { fadeIn: [-1, 0], fade: [23, 23] },   // no fades: the joints hand the picture over (J1 in, J2 out)
   caps: [
-    [0.8, 4.6, 'Then cometh Jesus from Galilee to Jordan unto John, to be baptized of him.', '耶穌從加利利來到約旦河，見了約翰，要受他的洗。'],
+    [0.8, 5.0, 'Then cometh Jesus from Galilee to Jordan unto John, to be baptized of him.', '耶穌從加利利來到約旦河，見了約翰，要受他的洗。'],
     [5.6, 8.8, 'And, lo, the heavens were opened unto him.', '天忽然為他開了。'],
     [9.6, 13.6, 'He saw the Spirit of God descending like a dove.', '他就看見神的靈彷彿鴿子降下。'],
     [14.4, 18.6, 'This is my beloved Son, in whom I am well pleased.', '這是我的愛子，我所喜悅的。'],

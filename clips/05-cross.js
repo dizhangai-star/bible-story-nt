@@ -9,10 +9,10 @@ window.CLIP = {
   duration: 25,
   timing: { fadeIn: [-1, 0], fade: [25, 25] },   // J4 brings the picture in, J5 hands it on
   caps: [
-    [0.8, 4.8, 'And when they were come to the place, which is called Calvary, there they crucified him.', '到了一個地方，名叫髑髏地，就在那裡把耶穌釘在十字架上。'],
-    [5.8, 9.8, 'And it was about the sixth hour, and there was a darkness over all the earth.', '那時約有午正，遍地都黑暗了。'],
+    [0.8, 5.3, 'And when they were come to the place, which is called Calvary, there they crucified him.', '到了一個地方，名叫髑髏地，就在那裡把耶穌釘在十字架上。'],
+    [5.8, 10.1, 'And it was about the sixth hour, and there was a darkness over all the earth.', '那時約有午正，遍地都黑暗了。'],
     [10.6, 14.2, 'It is finished: and he bowed his head, and gave up the ghost.', '成了！便低頭，將靈魂交付神了。'],
-    [16.8, 20.6, 'And, behold, the veil of the temple was rent in twain from the top to the bottom.', '忽然，殿裡的幔子從上到下裂為兩半。'],
+    [16.8, 20.9, 'And, behold, the veil of the temple was rent in twain from the top to the bottom.', '忽然，殿裡的幔子從上到下裂為兩半。'],
     [21.4, 24.4, 'The Sixth Window · The Resurrection', '第六扇窗 · 復活'],   // the next chapter's name (J5)
   ],
   // J5 · the torn veil → the night garden: the white light through the veil narrows and goes out as the camera pulls

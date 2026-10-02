@@ -5,9 +5,10 @@ Sequel to `../bible-story` (the Old Testament, finished 2026-09-30). Everything 
 "Notes" applies here too (same engine, `sg/`, `clips/_glass.js`); read those sections there instead of re-learning.
 
 ## Next step
-**Sprint 5 done — draft waiting for the user's review** (`out/sprint5-draft.mp4`, scored: 00-title + 01–07 ≈ 2:51,
-first draft with sound; 06 now 26 s with J6, 07-jerusalem 22.5 s, fading out). After sign-off: Sprint 6 (Deliver):
-rewrite `08-end` (still the OT end card), joint review, newcomer review → captions, compile, check, srt, poster, GitHub.
+**Sprint 6 (Deliver) done — waiting for the user's sign-off** (`out/bible-nt.mp4`, 178.7 s, −16 LUFS, TP −1.4 dBTP,
+`check.mjs` OK; `out/bible-nt.srt` 31 subs; `docs/poster.jpg`; `docs/newcomer-review.md`). Open choices in the review
+(01's "them" caption, 05's veil) are suggestions, not applied. After sign-off: merge to `main`, push to GitHub,
+`clean.mjs` the sprint drafts.
 
 ## Decisions (locked)
 - **Folder / repo:** own folder `bible-nt/`, own git repo; `bible-story/` and `_kit/` are never edited from here.
@@ -88,7 +89,12 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   stone, A pedal under the roll, D major at the light, the Genesis line at "Mary" · 07 harp per petal, a chord per
   gate (D · G/D · A/D · D), the Genesis line whole (Dorian, over F · Gm · A) resolving to D major on the widest.
   Joints ring 1.2 s and land in the next chapter's key. 07's stone glass notes D5…A6 (one per stone).
-- [ ] **6 · Deliver**: joint review, cards, newcomer review → captions, compile, check, srt, poster, GitHub
+- [x] **6 · Deliver** (2026-10-02, in review): newcomer review (`docs/newcomer-review.md`) · captions: 5 English lines over
+  20 letters/s stretched into the following gaps (all ≤ 20 now, 中文 ≤ 7 字/s), 07's second line drops "And", 06 adds
+  the 和合本/KJV gloss "Rabboni; which is to say, Master" · `08-end` rewritten (10 s): John 8:12 whole (the carving's
+  source) + 兩扇窗 · 一道光 / TWO WINDOWS · ONE LIGHT; its score resolves the OT card's open G to D (Amen, IV → I) ·
+  compile, check, srt, poster (`poster.js` dev clip: 07 at 17.6 without the banderole). Joints J1–J6 as signed off.
+  GitHub (merge + push) after sign-off.
 
 ## Notes
 - `GX.joint` needs `this.J` (it reads `J.next`): a chapter without its joint yet (the sprint's last) returns `st`.
@@ -96,7 +102,7 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   clips it, so it passes behind the mullion. Keep the crossing short (≈ .8 s), it vanishes there.
 - White on white disappears: the dove on the ray needs a gold ray and a dove scaled 1.7 (wider than the ray).
 - `clips/ot-genesis.js` has no joint (`uses` without `02-eden`; `GX.joint` returns the state as is when the next
-  clip isn't loaded). `08-end.js` still holds the OT content (rewrite in Sprint 6).
+  clip isn't loaded).
 - NT cast (`sg/figure.js` CAST): jesus, jesusRisen (gold mantle, cross-staff), mary (blue veil = `head: 'cloth'`,
   `band: false`), joseph, john, blind, peter, magdalene, disciple. New options: `halo: 'cross'|'plain'` (drawn first,
   behind the head), `lock: false` (no front hair lock; men with long hair), items `crossStaff`, `cup`, `bread`.
@@ -126,5 +132,10 @@ Numbered from 0 in this repo (the OT film's Sprints 0–6 are in `../bible-story
   clip can `uses: ['_glass', 'board']` and call `window.BOARD.shot(id, E)` (sf.js does).
 - `drawRose(P, { lit, col })`: `q.ring` marks the 36 ring segments (`q.id − 5100` = k, top = k 27), `q.petal` the
   petal (top = 9), `q.petal < 0` the centre. Recolour with `col`, dim with `lit`.
-- Drafts without 08-end: concat `out/00…07` with ffmpeg and cut `audio/build/film.wav` to that length (compile.mjs needs
+- A clean frame of a film clip (no banderole): a dev clip with `nosub: true`, `uses: ['_glass', '<clip>', '_grab']`;
+  `_grab.js` keeps the clip loaded just before it as `window.GRAB` (the runtime only loads the main clip's `uses`), call
+  `GRAB.state.call(GRAB, t, E)` (`poster.js`). Film frames always carry the banderole, even empty between captions.
+- check.mjs black segments are all intended: the title card (text on black), 05's dark after "gave up the ghost",
+  07's fade into the end card.
+- (Sprints 2–5) Drafts without 08-end: concat `out/00…07` with ffmpeg and cut `audio/build/film.wav` to that length (compile.mjs needs
   every `NN-*` render, and 08-end is still the OT card).
